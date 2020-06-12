@@ -1,0 +1,106 @@
+<head>
+    <title>My Github Portfolio</title>
+    <link rel="icon" href="https://www.favicon.cc/logo3d/831343.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container h-50">
+        <div class="row align-items-center h-100">
+            <div class="col-sm-3">
+                <img align="left"
+                    src="https://avatars1.githubusercontent.com/u/19185037?s=460&u=d4bc8f8de6b1042b88b8eb5a215b1ce46c20f81c&v=4"
+                    width="200px" height="200px">
+            </div>
+            <div class="col-sm-6">
+                <h4 align="center" id="name">Hey man its me !</h4>
+                <h1 align="center">Follow me in <a href="https://github.com/mepesh" target="_blank"
+                        rel="nofollow">Github</a>
+                </h1>
+                <table class="table table-dark" border="3">
+                    <tr>
+                        <th>Repos</th>
+                        <th>Following</th>
+                        <th>Followers</th>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td id="repos"></td>
+                            <td id="following"></td>
+                            <td id="followers"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-6">
+            <h2>My Public Repos</h2>
+            <table id="table" class="table" border="0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name of Repo</th>
+                        <th>URL of Repo</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="col-sm-5">
+            <a class="twitter-timeline" data-width="400" data-height="600"
+                href="https://twitter.com/Dpunkene?ref_src=twsrc%5Etfw">Tweets by Dpunkene</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        fetch('https://api.github.com/users/mepesh')
+            .then(resposne => resposne.json())
+            .then(function (data) {
+                document.getElementById('followers').textContent = data['followers']
+                document.getElementById('following').textContent = data['following']
+                let name = "Hey guys, Its me \n " + data['name'] + " !";
+                document.getElementById('name').textContent = name
+
+            })           
+    </script>
+    <script>
+        var table = document.getElementById('table');
+        fetch('https://api.github.com/users/mepesh/repos')
+            .then(response => response.json())
+            .then(function (item) {
+                document.getElementById('repos').textContent = item.length
+                for (i = 0; i < item.length; i++) {
+                    var tr = document.createElement('tr')
+                    var td = document.createElement('td')
+                    var a = document.createElement('a')
+                    td.innerHTML = item[i]['name'];
+                    var td1 = document.createElement('td')
+                    td1.innerHTML = item[i]['html_url'];
+
+                    a.setAttribute("href", item[i]['html_url'])
+                    a.appendChild(td1)
+
+                    tr.appendChild(td);
+                    tr.appendChild(td1)
+
+                    table.appendChild(tr);
+                }
+            })
+
+    </script>
+
+</body>
